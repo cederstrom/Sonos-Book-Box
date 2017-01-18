@@ -16,7 +16,7 @@ while(True):
         tv_rum.stop()
     elif(key == '1'):
         print("Playing Prästens lilla kråka")
-        tv_rum.volume = 5 #20
+        tv_rum.volume = 20
         tv_rum.clear_queue()
         tv_rum.play_uri(PRASTENS_LILLA_KRAKA_URI)
     elif(key == 'q'):
