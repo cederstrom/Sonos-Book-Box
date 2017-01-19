@@ -1,0 +1,8 @@
+[rfid]
+whitecard = 
+
+[songs]
+1 = x-sonos-spotify:spotify:track:6FDARjuebXcy08AMLLftRk?sid=9&flags=8224&sn=7
+
+[sonos]
+room_name = TV-rum
