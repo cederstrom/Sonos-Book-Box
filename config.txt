@@ -11,3 +11,4 @@
 
 [sonos]
 room_name = TV-rum
+volume = 20

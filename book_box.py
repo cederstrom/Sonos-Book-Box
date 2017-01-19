@@ -60,7 +60,7 @@ while(True):
             track = _get_queable_item(spotify_uri)
 
             room.stop()
-            room.volume = 20
+            room.volume = parser.get('sonos', 'volume')
             #room.play_mode = 'REPEAT_ALL'
             room.clear_queue()
             room.add_to_queue(track)
