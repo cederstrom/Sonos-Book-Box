@@ -1,22 +1,13 @@
 [songs]
 1 = spotify:track:6FDARjuebXcy08AMLLftRk
-1_name = Prästens lilla kråka
 2 = spotify:track:05Xe1JTyJlGyAyDNOxmJLS
-2_name = Krokodilen i bilen
 3 = spotify:track:5L8Vx4iA76xSpJOjNCulVk
-3_name = Lille katt
 4 = spotify:track:5van1pakA2DI8i8w6B4yZq
-4_name = Var bor du lilla råtta
 5 = spotify:track:5FGQpcrlZQlAH3Ij2xgjjp
-5_name = En elefant balanserade
 6 = spotify:track:3n1KHEx6wM497gYHG7UOR7
-6_name = Imse vimse spindel
 7 = spotify:track:6JuLLw5THKj7wOku0iLnlJ
-7_name = Ekorrn satt i granen
 8 = spotify:track:525wNQzfIQeZeDV56LxjeV
-8_name = Här kommer Pippi Långstrump
 9 = spotify:track:1Jdf0MgDaZSM7EJf2pj3h0
-9_name = I ett hus vid skogens slut
 
 [sonos]
 room_name = TV-rum
