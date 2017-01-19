@@ -19,9 +19,15 @@ sys.setdefaultencoding('utf-8')
 parser = SafeConfigParser()
 parser.read('config.txt')
 
-account = next(a for a in Account.get_accounts_for_service(SPOTIFY_SERVICE_TYPE)
-    if a.nickname == 'Andreas')
-spotify = MusicService('Spotify', account=account)
+spotify_accounts = Account.get_accounts_for_service(SPOTIFY_SERVICE_TYPE)
+spotify_account = None
+if(len(spotify_accounts) == 1):
+    spotify_account = spotify_accounts[0]
+elif(len(spotify_accounts) > 1):
+    spotify_account = next(a for a in Account.get_accounts_for_service(SPOTIFY_SERVICE_TYPE)
+        if a.nickname == parser.get('spotify', 'account_nickname'))
+
+spotify = MusicService('Spotify', account=spotify_account)
 
 room = None
 while(room is None):

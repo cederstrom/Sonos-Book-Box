@@ -12,6 +12,8 @@
 [sonos]
 room_name = TV-rum
 volume = 20
-
 # http://docs.python-soco.com/en/latest/api/soco.core.html?highlight=play_mode#soco.core.SoCo.play_mode
 play_mode = NORMAL
+
+[spotify]
+account_nickname = Andreas
