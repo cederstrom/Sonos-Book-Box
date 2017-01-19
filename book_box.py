@@ -10,13 +10,16 @@ import sys
 import time
 
 
+SPOTIFY_SERVICE_TYPE = '2311'
+
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 parser = SafeConfigParser()
 parser.read('config.txt')
 
-account = next(a for a in Account.get_accounts_for_service('2311')
+account = next(a for a in Account.get_accounts_for_service(SPOTIFY_SERVICE_TYPE)
     if a.nickname == 'Andreas')
 spotify = MusicService('Spotify', account=account)
 
