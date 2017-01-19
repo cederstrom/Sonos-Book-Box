@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from ConfigParser import NoOptionError, SafeConfigParser
 from Getch import getch
