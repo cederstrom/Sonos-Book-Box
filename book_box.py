@@ -61,7 +61,7 @@ while(True):
 
             room.stop()
             room.volume = parser.get('sonos', 'volume')
-            #room.play_mode = 'REPEAT_ALL'
+            room.play_mode = parser.get('sonos', 'play_mode')
             room.clear_queue()
             room.add_to_queue(track)
             room.play_from_queue(0)
