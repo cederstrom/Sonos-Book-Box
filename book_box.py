@@ -69,6 +69,9 @@ while(True):
             spotify_uri = parser.get('songs', key)
             track = _get_queable_item(spotify_uri)
 
+            old_volume = room.volume
+            was_playing_line_in = room.is_playing_line_in
+
             room.stop()
             room.volume = parser.get('sonos', 'volume')
             room.play_mode = parser.get('sonos', 'play_mode')
@@ -76,8 +79,22 @@ while(True):
             room.add_to_queue(track)
             room.play_from_queue(0)
             
-            title = room.get_current_track_info().get('title')
+            track_info = room.get_current_track_info()
+            title = track_info.get('title')
             print("Playing: %s" % title)
+            
+            duration_array = track_info.get('duration').split(':')
+            duration = int(duration_array[0]) * 60 * 60
+            duration = duration + int(duration_array[1]) * 60
+            duration = duration + int(duration_array[2])
+            print("Duration: %s seconds" % duration)
+
+            if(was_playing_line_in is True):
+                time.sleep(duration)
+                if(room.switch_to_line_in() is True):
+                    room.volume = old_volume
+                    room.play()
+
         except NoOptionError as no_option_exception:
             print(no_option_exception)
         except Exception as e:
