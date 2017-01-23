@@ -6,6 +6,7 @@ from soco.compat import quote_url
 from soco.data_structures import DidlItem, DidlResource
 from soco.music_services import MusicService
 from soco.music_services.accounts import Account
+from threading import Thread, Timer
 import soco
 import sys
 import time
@@ -55,22 +56,36 @@ def _get_queable_item(spotify_uri):
         resources=res)
 
 
+def _resume_line_in_playback(volume):
+    print('Executing _resume_line_in_playback...')
+    room.switch_to_line_in()
+    room.volume = volume
+    room.play()
+
+def no_op():
+    pass
+
+last_restoration_thread_args = None
+restoration_thread = Timer(1, no_op)
 while(True):
     key = getch()
     print(key)
     if(key == '0'):
         print("Stop playback")
+        restoration_thread.cancel()
         room.stop()
     elif(key == 'q'):
         print("Quitting")
+        restoration_thread.cancel()
         quit()
     else:
         try:
             spotify_uri = parser.get('songs', key)
             track = _get_queable_item(spotify_uri)
 
-            old_volume = room.volume
             was_playing_line_in = room.is_playing_line_in
+            if(was_playing_line_in):
+                old_volume = room.volume
 
             room.stop()
             room.volume = parser.get('sonos', 'volume')
@@ -87,14 +102,17 @@ while(True):
             duration = int(duration_array[0]) * 60 * 60
             duration = duration + int(duration_array[1]) * 60
             duration = duration + int(duration_array[2])
-            print("Duration: %s seconds" % duration)
 
-            if(was_playing_line_in is True):
-                time.sleep(duration)
-                if(room.switch_to_line_in() is True):
-                    room.volume = old_volume
-                    room.play()
-
+            if(was_playing_line_in is True or restoration_thread.is_alive() is True):
+                if(restoration_thread.is_alive() is True):
+                    print("Canceling old restoration_thread")
+                    restoration_thread.cancel()
+                    was_playing_line_in = True
+                    
+                print("Starting restoration_thread. Waiting %s seconds" % duration)
+                restoration_thread = Timer(duration, _resume_line_in_playback, [old_volume])
+                restoration_thread.start()
+                
         except NoOptionError as no_option_exception:
             print(no_option_exception)
         except Exception as e:
