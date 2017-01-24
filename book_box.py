@@ -72,11 +72,9 @@ while(True):
     print(key)
     if(key == '0'):
         print("Stop playback")
-        restoration_thread.cancel()
         room.stop()
     elif(key == 'q'):
         print("Quitting")
-        restoration_thread.cancel()
         quit()
     else:
         try:
