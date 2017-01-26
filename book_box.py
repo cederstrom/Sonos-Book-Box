@@ -32,15 +32,17 @@ elif(len(spotify_accounts) > 1):
 spotify = MusicService('Spotify', account=spotify_account)
 
 room = None
+sys.stdout.write("Looking for your Sonos player..")
 while(room is None):
+    sys.stdout.write('.')
+    sys.stdout.flush()
     try:
         rooms = soco.discover()
         room = next(x for x in list(rooms)
             if x.player_name == parser.get('sonos', 'room_name'))
-        print("Found room: %s" % room.player_name)
+        print("\nFound room: %s" % room.player_name)
     except StopIteration as si:
-        print("Did not find wanted room. Trying again in 3 sec.")
-        time.sleep(3)
+        time.sleep(1)
 
 
 def _get_queable_item(spotify_uri):
@@ -62,11 +64,8 @@ def _resume_line_in_playback(volume):
     room.volume = volume
     room.play()
 
-def no_op():
-    pass
 
-last_restoration_thread_args = None
-restoration_thread = Timer(1, no_op)
+restoration_thread = Timer(1, time.sleep, [0])
 while(True):
     key = getch()
     print(key)
