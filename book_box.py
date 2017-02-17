@@ -45,6 +45,9 @@ while(room is None):
         time.sleep(1)
 
 
+old_volume = room.volume
+
+
 def _get_queable_item(spotify_uri):
     encoded_spotify_uri = quote_url(spotify_uri)
     didl_item_id = '0fffffff{0}'.format(encoded_spotify_uri)
@@ -58,10 +61,10 @@ def _get_queable_item(spotify_uri):
         resources=res)
 
 
-def _resume_line_in_playback(volume):
+def _resume_line_in_playback():
     print('Executing _resume_line_in_playback...')
     room.switch_to_line_in()
-    room.volume = volume
+    room.volume = old_volume
     room.play()
 
 
@@ -72,6 +75,8 @@ while(True):
     if(key == '0'):
         print("Stop playback")
         room.stop()
+        _resume_line_in_playback()
+
     elif(key == 'q'):
         print("Quitting")
         quit()
@@ -107,7 +112,7 @@ while(True):
                     was_playing_line_in = True
                     
                 print("Starting restoration_thread. Waiting %s seconds" % duration)
-                restoration_thread = Timer(duration, _resume_line_in_playback, [old_volume])
+                restoration_thread = Timer(duration, _resume_line_in_playback, [])
                 restoration_thread.start()
                 
         except NoOptionError as no_option_exception:
